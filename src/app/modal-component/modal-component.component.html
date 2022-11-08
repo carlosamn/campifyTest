@@ -1,0 +1,64 @@
+<div class="dialog-container">
+  <div class="dialog-container__close-button">
+    <button mat-icon-button (click)="dialogRef.close()" mat-dialog-close>
+      <mat-icon matIcon>close</mat-icon>
+    </button>
+  </div>
+  <h1 mat-dialog-title>Add New Session</h1>
+
+  <div class="dialog-container__content" mat-dialog-content>
+    <form
+      class="dialog-container__form"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-label>Name:</mat-label>
+      <mat-form-field appearance="outline">
+        <input type="text" matInput formControlName="name" required />
+      </mat-form-field>
+      <mat-label>Start Time:</mat-label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [ngxMatTimepicker]="pickerStart"
+          formControlName="startTime"
+          readonly
+          required
+        />
+        <mat-hint
+          class="dialog-container__input-hint"
+          *ngIf="
+            form?.errors?.['timeInvalid']
+          "
+          >Start time must be less than end time</mat-hint
+        >
+      </mat-form-field>
+      <ngx-mat-timepicker #pickerStart></ngx-mat-timepicker>
+
+      <mat-label>End Time:</mat-label>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [ngxMatTimepicker]="pickerEnd"
+          formControlName="endTime"
+          readonly
+          required
+        />
+        <mat-hint
+          class="dialog-container__input-hint"
+          *ngIf="
+            form?.errors?.['timeInvalid']
+          "
+          >End time must be greater than start time</mat-hint
+        >
+      </mat-form-field>
+      <ngx-mat-timepicker #pickerEnd></ngx-mat-timepicker>
+
+      <div mat-dialog-actions>
+        <button [disabled]="form.invalid" mat-button cdkFocusInitial>
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
